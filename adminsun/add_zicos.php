@@ -1,0 +1,1 @@
+<!-- Possibilité d'ajouter des musiciens, table avec champs pseudo, image, name, instrument, déscription(voir pour les noms de champs définitif a traduire en anglais) -->

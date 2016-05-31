@@ -1,0 +1,77 @@
+
+
+.form-style-4{
+
+    margin-top: 200px;
+    font-size: 16px;
+    background: transparent;
+    padding: 30px 30px 15px 30px;
+    
+}
+.form-style-4 input[type=submit],
+.form-style-4 input[type=button],
+.form-style-4 input[type=text],
+.form-style-4 input[type=email],
+.form-style-4 textarea,
+.form-style-4 label
+{
+    font-family: 'Josefin Slab', Arial, sans-serif;
+    text-align: center;
+    font-size: 22px;
+    color: #000;
+
+}
+.form-style-4 label {
+    display:block;
+    margin-bottom: 10px;
+}
+.form-style-4 label > span{
+    margin: 0 auto;
+    display: inline-block;
+    
+    
+}
+.form-style-4 input[type=text],
+.form-style-4 input[type=email] 
+{
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed #fff;
+    width: 1000px;
+    outline: none;
+    padding: 0px 0px 0px 0px;
+    font-style: italic;
+}
+.form-style-4 textarea{
+    font-style: italic;
+    padding: 0px 0px 0px 0px;
+    background: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1px dashed #fff;
+    width: 1000px;
+    overflow: hidden;
+    resize:none;
+    height:20px;
+}
+
+.form-style-4 textarea:focus, 
+.form-style-4 input[type=text]:focus,
+.form-style-4 input[type=email]:focus,
+.form-style-4 input[type=email] :focus
+{
+    border-bottom: 1px dashed #D9FFA9;
+}
+
+.form-style-4 input[type=submit],
+.form-style-4 input[type=button]{
+    background: transparent;
+    border: none;
+    padding: 8px 10px 8px 10px;
+    border-radius: 5px;
+    color: #000;
+}
+.form-style-4 input[type=submit]:hover,
+.form-style-4 input[type=button]:hover{
+    background: orange;
+}
