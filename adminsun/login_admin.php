@@ -4,9 +4,9 @@
  <?php
 session_start();//permet de demarrer la session
 if (isset($_SESSION['user']['role'])){
-    header('Location: administration.php');
+    header('Location: ../index.php');
 }
-
+require_once 'inc/header.php'
 require_once 'inc/connect.php';
 
 
@@ -26,14 +26,14 @@ if(!empty($_POST)){//01
 
 // On vérifie que l'adresse email est au bon format
 	/*if(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)){*/
-	if(!preg_match ( " /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ " , $post['email'] )){
-		$error[] = 'L\'adresse email est invalide';
+	if(!preg_match ( "#^[a-zA-Z0-9]{8,20}$#" , $post['name'] )){
+		$error[] = 'Le nom ou le password est invalide';
 	}	
 	
 
 	if(!preg_match ( "#^[a-zA-Z0-9]{8,20}$#" , $post['password'] )){
 
-		$error[] = 'vous devez saisir un mot de passe valide entre 8 et 20 caractéres';
+		$error[] = 'Le nom ou le password est invalide';
 	}
 	/*if(empty($post['password'])){
 	
@@ -42,9 +42,9 @@ if(!empty($_POST)){//01
 
 
 			if(count($error) == 0){//02
-			$select = $pdo->prepare('SELECT * FROM users INNER JOIN authorization ON users.id = authorization.id_user WHERE email = :checkEmail');//
+			$select = $pdo->prepare('SELECT * FROM users  WHERE name = :checkName');//
 
-			$select->bindValue(':checkEmail', $post['email']);
+			$select->bindValue(':checkName', $post['name']);
 		if($select->execute()){//03
 
 				$user = $select->fetch();//contient notre utilisateur relatif à l'adresse email
@@ -61,15 +61,12 @@ if(!empty($_POST)){//01
 
 				'id'        => $user['id'],
 				'nickname'  => $user['nickname'],
-				'firstname' => $user['firstname'],
-				'lastname'  => $user['lastname'],
-				'email'     => $user['email'],
 				'role'      => $user['role']
-								];
+				];
 		//je redirige vers la page "infos_users.php"
 
 
-		header('Location: administration.php');
+		header('Location: index.php');
 		die;
 																								
 		}
@@ -110,9 +107,9 @@ if(!empty($_POST)){//01
 <form class="form-horizontal" method="post">
 
 	<div class="form-group">
-		<label class="col-md-4 control-label" for="email">email</label>  
+		<label class="col-md-4 control-label" for="name">name</label>  
 		<div class="col-md-4">
-			<input id="email" name="email" type="email" placeholder="Votre email" class="form-control input-md" required>
+			<input id="name" name="name" type="name" placeholder="Votre nom" class="form-control input-md" required>
 		</div>
 	</div>
 
@@ -132,11 +129,6 @@ if(!empty($_POST)){//01
 
 </form>
 
-
-
-<?php
-require_once '../inc/footer_admin.php';
-?>
 
 
 
