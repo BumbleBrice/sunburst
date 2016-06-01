@@ -3,7 +3,7 @@
 
  <?php
 session_start();//permet de demarrer la session
-if (isset($_SESSION['user']['role'])){
+if (isset($_SESSION['user'])){
     header('Location: ../index.php');
 }
 require_once 'inc/header.php'
@@ -61,7 +61,6 @@ if(!empty($_POST)){//01
 
 				'id'        => $user['id'],
 				'nickname'  => $user['nickname'],
-				'role'      => $user['role']
 				];
 		//je redirige vers la page "infos_users.php"
 

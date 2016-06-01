@@ -6,7 +6,8 @@ require_once 'header.php';
 		      <ul>
 			     <li>
 			        <img src="images/gaby.jpg" alt="" />	          
-			     </li><li>
+			     </li>
+			     <li>
 			        <img src="images/gaby.jpg" alt="" />	          
 			     </li>
 			     <li>

@@ -13,7 +13,7 @@
         <link href='https://fonts.googleapis.com/css?family=Amarante' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Josefin+Slab' rel='stylesheet' type='text/css' />
     </head>
-    <body style="background-image: url(images/pattern.png), url(images/8.jpg);">
+    <body style="background-image: url(images/8.jpg);">
         <div class="wrapper">
             <div>
                 <ul class="cmenu">
