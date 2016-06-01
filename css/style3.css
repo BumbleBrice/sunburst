@@ -70,7 +70,7 @@ input[type=submit]:focus, input[type=reset]:focus {
 	color: #fff;
 	text-decoration: none;
 	white-space: nowrap;
-	color: transparent;
+	color: black;
 	display: block;
 	text-transform: uppercase;
 	text-align: center;
