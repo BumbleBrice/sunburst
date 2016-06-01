@@ -10,7 +10,6 @@
         <meta name="author" content="BumbleBrice" />
         <link rel="stylesheet" type="text/css" href="css/demo.css" />
         <link rel="stylesheet" type="text/css" href="css/style3.css" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <link href='https://fonts.googleapis.com/css?family=Amarante' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Josefin+Slab' rel='stylesheet' type='text/css' />
     </head>
@@ -25,12 +24,3 @@
                     <li><a href="contact.php">Contact</a></li>
                 </ul>
             </div>
-
-      <h1 class="amarante">Nous écouter</h1>
-        <div><h2>Igit - Je suis libre</h2><audio src="audio/igit.mp3" controls></audio></div>
-        <div><h2>David Bowie - Oh ! You Pretty Things</h2><audio src="audio/bowie.mp3" controls></audio></div>
-        <div><h2>Motôrhead - Ace of Spades</h2><audio src="audio/motor.mp3" controls></audio></div>
-        <div><h2>U2 - In a Little While</h2><audio src="audio/u2.mp3" controls></audio></div>
-
-    </body>
-</html>
