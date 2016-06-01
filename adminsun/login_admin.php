@@ -2,10 +2,7 @@
  -->
 
  <?php
-session_start();//permet de demarrer la session
-if (isset($_SESSION['user'])){
-    header('Location: ../index.php');
-}
+
 require_once 'inc/header.php'
 require_once 'inc/connect.php';
 
