@@ -8,8 +8,11 @@
         <meta name="description" content="Blur Menu with CSS3 Transitions" />
         <meta name="keywords" content="blues, groupe, band, concert, live, guitar, bass, rock" />
         <meta name="author" content="BumbleBrice" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
         <link rel="stylesheet" type="text/css" href="css/demo.css" />
         <link rel="stylesheet" type="text/css" href="css/style3.css" />
+        <link rel="stylesheet" type="text/css" href="css/contact.css" />
         <link href='https://fonts.googleapis.com/css?family=Amarante' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Josefin+Slab' rel='stylesheet' type='text/css' />
     </head>
