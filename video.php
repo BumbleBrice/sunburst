@@ -1,5 +1,6 @@
 <?php 
-require_once 'header.php';
+require_once 'inc/header.php';
+require_once 'inc/connect.php';
 ?> 
 <div class="container">
     <div class="row">
@@ -16,6 +17,6 @@ require_once 'header.php';
         </div>
     </div>
 </div>
-
-    </body>
-</html>
+<?php 
+require_once 'inc/footer.php';
+?>
