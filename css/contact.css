@@ -75,3 +75,9 @@
 .form-style-4 input[type=button]:hover{
     background: orange;
 }
+
+.ContactMessageErreur {
+    font-family: 'Amarante', Tahoma, sans-serif;
+    color: red;
+    font-size: 1.8em;
+}
