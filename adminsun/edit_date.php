@@ -183,7 +183,7 @@ include_once '../inc/header_admin.php';
                                       <input type="text" class="form-control" name="heureC" value="<?=$heureC; ?>" aria-describedby="basic-addon1">
                                     </div><br>
                                     <div class="form-group input-group">
-                                      <span class="input-group-addon" id="basic-addon1">Place</span>
+                                      <span class="input-group-addon" id="basic-addon1">Lieu</span>
                                       <input type="text" class="form-control" name="place" value="<?=$dateplace; ?>" aria-describedby="basic-addon1">
                                     </div><br>
                                     <div class="form-group input-group">

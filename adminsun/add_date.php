@@ -1,12 +1,7 @@
 <?php 
+require_once '../inc/connect.php';
 
-session_start();
-
-require_once '../inc/connect.php'; 
-
-if (empty($_SESSION) || !isset($_SESSION['user'])){
-    header('Location: ../index.php');
-}
+include_once '../inc/header_admin.php';
 
 $post = array(); // Contiendra les données du formulaire nettoyées
 $errors = array(); // contiendra nos éventuelles erreurs
@@ -14,57 +9,57 @@ $errors = array(); // contiendra nos éventuelles erreurs
 $showErrors = false;
 $success = false; 
 
-$title = '';
-$content = '';
-$dirlink = "link-default.jpg";
-
+$dateC = '';
+$heureC = '';
+$place = '';
+$adress = '';
+$city = '';
+$tarif = '';
 
 
 if (!empty($_POST)) {
-	
-	foreach ($_POST as $key => $value) { // Nettoyage des données
-		$post[$key] = trim(strip_tags($value)); // récupération du _POST dans un tableau
-	}
-	//if(strlen($post['title']) < 2 || strlen($post['title']) > 50){ // on définit les propriétés de 'title'
-    if(!preg_match("#^[A-Z]+[a-zA-Z0-9À-ú\.:\!\?\&',\s-]{5,140}#", $post['title'])){    
-        $errors[] = 'Votre nom de recette doit comporter entre 5 et 140 caractères et commencer par une majuscule';
+    
+    foreach ($_POST as $key => $value) { // Nettoyage des données
+        $post[$key] = trim(strip_tags($value)); // récupération du _POST dans un tableau
     }
-    //if(strlen($post['content']) < 2 ){ // on défini les propriétés de 'content'
-    if(!preg_match("#^[a-zA-Z0-9À-ú\.:\!\?\&',\s-]{20,}#", $post['content'])){
-        $errors[] = 'La recette doit comporter au minimum 20 caractères'; 
-	}
-	else {
-	    $reqEmail = $pdo->prepare('SELECT title FROM recipes WHERE title = :title'); // Vérification au cas où l'email est déjà dans la pdo
-        $reqEmail->bindValue(':title', $post['title']);
-        $reqEmail->execute();
-       
-        if($reqEmail->rowCount() != 0){ // Si l'email n'est pas dans la pdo alors, on peu crée l'utilisateur
-             $errors[] = 'La recette existe déjà !';
-        }
-	} 
-
-	if(count($errors) > 0){  // On compte les erreurs, s'il y en a (supérieur a 0), on passera la variable $showErrors à true.
-        $showErrors = true; // valeur booleen // permettra d'afficher nos erreurs s'il y en a
-
-        $title = $post['title'];
-        $content = $post['content'];
+    //if(strlen($post['nickname']) < 2 || strlen($post['nickname']) > 50){ // on définit les propriétés de 'nickname'
+     if(!preg_match("#^[a-zA-Z0-9À-ú\.:\!\?\&',\s-]{3,25}#", $post['dateC'])){    
+        $errors[] = 'La date doit comporter entre 3 et 25 caractères';
+    }
+    if(!preg_match("#^[a-zA-Z0-9À-ú\.:\!\?\&',\s-]{3,10}#", $post['heureC'])){    
+        $errors[] = 'L\heure du concert doit comporter entre 3 et 10 caractères';
+    }
+    if(!preg_match("#^[A-Z]+[a-zA-Z0-9À-ú\.:\!\?\&',\s-]{3,25}#", $post['place'])){    
+        $errors[] = 'Le lieu du concert doit comporter entre 3 et 25 caractères et commencer par une majuscule';
+    }
+    if(!preg_match("#^[A-Z]+[a-zA-Z0-9À-ú\.:\!\?\&',\s-]{3,35}#", $post['adress'])){    
+        $errors[] = 'L\'adresse du concert doit comporter entre 3 et 35 caractères et commencer par une majuscule';
+    }
+    if(!preg_match("#^[A-Z]+[a-zA-Z0-9À-ú\.:\!\?\&',\s-]{3,30}#", $post['city'])){    
+        $errors[] = 'La ville du concert doit comporter entre 3 et 30 caractères et commencer par une majuscule';
+    }
+    if(!preg_match("#^[a-zA-Z0-9À-ú\.:\!\?\&',\s-]{3,5}#", $post['tarif'])){    
+        $errors[] = 'Le tarif doit comporter entre 3 et 5 caractères';
     }
     else { 
-    	// Insertion dans la pdo 
-    	$res = $pdo->prepare('INSERT INTO recipes (title, content, date_publish, link, id_user) VALUES(:title, :content, NOW(), :linkrecipe, :id_user )');
+        // Insertion dans la pdo 
+        $res = $pdo->prepare('INSERT INTO `date_concert` (`dateC`, `heureC`, `place`, `adress`, `city`, `tarif`) VALUES (:dateC, :heureC, :place, :adress, :city, :tarif)');
 
-        $res->bindValue(':title',		 $post['title'], 	PDO::PARAM_STR);
-        $res->bindValue(':content', 	 $post['content'],	PDO::PARAM_STR);
-        $res->bindValue(':linkrecipe',   $dirlink,          PDO::PARAM_STR);
-        $res->bindValue(':id_user',   $_SESSION['user']['id'],   	    PDO::PARAM_INT);
+        $res->bindValue(':dateC',       $post['dateC'],  PDO::PARAM_STR);
+        $res->bindValue(':heureC',      $post['heureC'],  PDO::PARAM_STR);
+        $res->bindValue(':place',       $post['place'], PDO::PARAM_STR);
+        $res->bindValue(':adress',      $post['adress'], PDO::PARAM_STR);
+        $res->bindValue(':city',        $post['city'], PDO::PARAM_STR);
+        $res->bindValue(':tarif',       $post['tarif'], PDO::PARAM_STR);
+
         
     
-	    if($res->execute()){
-	        $success = true; // Pour afficher le message de réussite si tout est bon
-	    }
-	    else {
-	        die;
-	    }
+        if($res->execute()){
+            $success = true; // Pour afficher le message de réussite si tout est bon
+        }
+        else {
+            die;
+        }
     }
 }
 
@@ -73,7 +68,7 @@ include_once '../inc/header_admin.php';
 ?>
 
 
-<h1 class="text-center">Ajouter une recette</h1>
+<h1 class="text-center">Ajouter une date</h1>
 <br>
 
 
@@ -81,7 +76,7 @@ include_once '../inc/header_admin.php';
 
 <?php 
 if($success){ // On affiche la réussite si tout fonctionne
-    echo '<div class="alert alert-success" role="alert"> La recette a bien été créée ! </div>';
+    echo '<div class="alert alert-success" role="alert"> La musicien a bien été créée ! </div>';
 }
 ?>
 
@@ -96,36 +91,39 @@ if($success){ // On affiche la réussite si tout fonctionne
     </div>
 <?php endif; ?>
 
-	<div class="alert alert-info" role="alert">Merci de remplir tous les champs correctement</div>	
+    <div class="alert alert-info" role="alert">Merci de remplir tous les champs correctement</div>  
 
-	<form method="post" class="pure-form pure-form-aligned" enctype="multipart/form-data">
+    <form method="post" class="pure-form pure-form-aligned" enctype="multipart/form-data">
 
-        <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Titre</span>
-            <input type="text" class="form-control" name="title" placeholder="Nom de la recette" aria-describedby="basic-addon1" value="<?=$title;?>">
-        </div>
-        <br>
+        <div class="form-group input-group">
+          <span class="input-group-addon" id="basic-addon1">Date</span>
+          <input type="text" class="form-control" name="dateC" placeholder="Date du concert" aria-describedby="basic-addon1">
+        </div><br>
+        <div class="form-group input-group">
+          <span class="input-group-addon" id="basic-addon1">Heure</span>
+          <input type="text" class="form-control" name="heureC" placeholder="Heure du début du concert" aria-describedby="basic-addon1">
+        </div><br>
+        <div class="form-group input-group">
+          <span class="input-group-addon" id="basic-addon1">Lieu</span>
+          <input type="text" class="form-control" name="place" placeholder="Nom de la salle de concert" aria-describedby="basic-addon1">
+        </div><br>
+        <div class="form-group input-group">
+          <span class="input-group-addon" id="basic-addon1">Adresse</span>
+          <input type="text" class="form-control" name="adress" placeholder="Adresse du concert" aria-describedby="basic-addon1">
+        </div><br>
+        <div class="form-group input-group">
+          <span class="input-group-addon" id="basic-addon1">Ville</span>
+          <input type="text" class="form-control" name="city" placeholder="Ville du concert" aria-describedby="basic-addon1">
+        </div><br>
+        <div class="form-group input-group">
+          <span class="input-group-addon" id="basic-addon1">Tarif</span>
+          <input type="text" class="form-control" name="tarif" placeholder="Veuillez indiquez le tarif en chiffre uniquement" aria-describedby="basic-addon1">
+        </div><br>
+            <input type="submit" class="btn btn-success" value="Ajouter la date">
+        </form> 
+  
 
-        <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Descriptif de la recette</span>
-            <textarea id="content" name="content" rows="15" class="form-control input-md" placeholder="Descriptif complet de la recette pour le client"><?=$content;?></textarea>
-        </div>
-        <br>
-
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-10">
-                    <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $maxSize; ?>">
-                    <input type="file" class="filestyle" name="picture" data-buttonName="btn-primary">
-                </div>
-
-                <div class="col-md-2">
-                    <input type="submit" class="btn btn-success" value="Ajouter la recette">
-                </div>
-            </div>
-        </div><!--.form-group-->
-
-	</form>
+    </form>
 
 </div>
 <?php
@@ -133,4 +131,3 @@ if($success){ // On affiche la réussite si tout fonctionne
 include_once '../inc/footer_admin.php';
 
 ?>
-<!-- Page d'ajout des dates de concerts champ dans la table : date, heure, lieu, adresse, ville, tarif(int), € gérer en glyph bootstrap ou fontawesome -->

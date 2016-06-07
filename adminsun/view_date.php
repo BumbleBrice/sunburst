@@ -24,7 +24,7 @@ include_once '../inc/header_admin.php';
       </thead>
       <tbody>
       <?php        
-      $res = $pdo->prepare('SELECT * FROM date_concert ORDER BY id ASC');
+      $res = $pdo->prepare('SELECT * FROM date_concert ORDER BY id DESC');
   	  $res->execute();
 
   	  $date_C = $res->fetchAll(PDO::FETCH_ASSOC); 

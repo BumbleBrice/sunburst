@@ -17,8 +17,8 @@ include_once '../inc/header_admin.php';
       $sunburst = $res->fetch(PDO::FETCH_ASSOC);
   	  echo $sunburst['desc_sun'];
   	}
-      ?>
-      <a type="button" class="btn btn-primary" href="edit_sun.php?id=<?php echo $sunburst['id'];?>">Modifier</a>
+?>
+		<br><br><br><a type="button" class="btn btn-primary" href="edit_sun.php?id=<?php echo $sunburst['id'];?>">Modifier</a>
 <?php
 
 
