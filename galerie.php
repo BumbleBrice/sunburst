@@ -1,5 +1,6 @@
 <?php 
-require_once 'header.php';
+require_once 'inc/header.php';
+require_once 'inc/connect.php';
 ?> 
       <h1 class="amarante">Photos</h1>
 	      <div class="galerie">
@@ -69,5 +70,6 @@ require_once 'header.php';
 			     </li>
 			</ul>
 		</div>
-    </body>
-</html>
+<?php 
+require_once 'inc/footer.php';
+?>

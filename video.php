@@ -6,7 +6,7 @@ require_once 'inc/connect.php';
     <div class="row">
         <div class="col-md-6">
         <h1 class="amarante">Nous voir</h1>
-            <iframe width="420" height="315" src="https://www.youtube.com/embed/FjeMDvCdrtc?rel=0" frameborder="0" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/ToD7t0kPGzE?rel=0" frameborder="0" allowfullscreen></iframe>
         </div>
         <div class="col-md-6">
            <h1 class="amarante">Nous écouter</h1>
