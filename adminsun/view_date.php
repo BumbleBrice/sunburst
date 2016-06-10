@@ -7,7 +7,7 @@ include_once '../inc/header_admin.php';
 
 <h2 class="text-center">Toute les dates de concert</h2>
 
-<a type="button" class="btn btn-info" href="add_dates.php">Ajouter un date</a>
+<a type="button" class="btn btn-info" href="add_date.php">Ajouter un date</a>
 <div class="table-responsive">
   <table class="table table-striped table-bordered table-condensed">
       <thead>

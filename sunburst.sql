@@ -90,25 +90,6 @@ CREATE TABLE `sunburst` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `users`
---
-
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `nickname` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Contenu de la table `users`
---
-
-INSERT INTO `users` (`id`, `nickname`, `password`) VALUES
-(1, 'BumbleAdmin', '$2y$10$dH5//h7acd7N1PE2RJ8fW.iF8lkUE8qUZA7gkD6SIkYRjYjeX2ofa');
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `video`
 --
 
