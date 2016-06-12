@@ -26,7 +26,7 @@ require_once 'inc/connect.php';
         <div class="box box-2">
             <h3><?php echo $zico['nickname']; ?></h3>
             <div class="image">
-                <img alt="photo du musicien" src="images/<?php echo $zico['picture']; ?>">
+                <img alt="photo de <?php echo $zico['nickname']; ?>" src="images/<?php echo $zico['picture']; ?>">
             </div>
             <div class="description">
                 <ul>
