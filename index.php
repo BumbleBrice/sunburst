@@ -18,7 +18,7 @@
         <div class="container">
             <div class="">
                 <ul class="bmenu">
-                    <li><a href="sunburst.php">SUnburst</a></li>
+                    <li><a href="sunburst.php">Sunburst</a></li>
                     <li><a href="galerie.php">Galerie photo</a></li>
                     <li><a href="video.php">Video</a></li>
                     <li><a href="concert.php">Date de concert</a></li>

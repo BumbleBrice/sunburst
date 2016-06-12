@@ -233,7 +233,7 @@ include_once '../inc/header_admin.php';
                 <?php if($ZicoExist == true): ?>
                 <div class="row">
                     <div class="col-md-12">
-                    <h1>Edition de la musicien : <strong><?php echo $editZico['nickname']; ?></strong></h1>
+                    <h1>Edition du musicien : <strong><?php echo $editZico['nickname']; ?></strong></h1>
 
                         <form class="form-horizontal" method="POST" enctype="multipart/form-data">
                             <fieldset>

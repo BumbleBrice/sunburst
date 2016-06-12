@@ -13,9 +13,7 @@ require_once 'inc/connect.php';
       $sunburst = $res->fetch(PDO::FETCH_ASSOC);
 ?>
     <p class="story"><?php echo $sunburst['desc_sun']; ?></p>
-<?php } ?>
-
-        <?php                   
+<?php }                  
             $res = $pdo->prepare('SELECT * FROM zicos ORDER BY id ASC');
             $res->execute();
 
