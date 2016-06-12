@@ -82,15 +82,7 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUE
 } //Fin traitement requête Ajax
 
 //Vérification si l'utilisateur est connecté
-if (!empty($_SESSION) && isset($_SESSION['user']['role'])){
 
-	if ($_SESSION['user']['role'] != 'admin') {
-		header('Location: administration.php');
-	}
-	
-} else {
-	header('Location: ../index.php');
-}
 
 //Si on veut consulter un message
 if (!empty($_GET) && isset($_GET['id_message'])) {

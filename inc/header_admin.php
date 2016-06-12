@@ -42,7 +42,8 @@
                             </ul>
                         </li>
 
-						<li><a href="view_video.php">Video et mp3</a></li>
+                        <li><a href="view_audio.php">mp3</a></li>
+						<li><a href="view_video.php">Video</a></li>
 						<li><a href="contact.php">Lire les messages</a></li>
                     </ul>
                 </div>
