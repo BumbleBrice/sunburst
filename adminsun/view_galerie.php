@@ -7,7 +7,7 @@ include_once '../inc/header_admin.php';
 
 <h2 class="text-center">Les photos</h2>
 
-<a type="button" class="btn btn-info" href="add_pics.php">Ajouter un photo</a>
+<a type="button" class="btn btn-info" href="add_galerie.php">Ajouter un photo</a>
 <div class="table-responsive">
   <table class="table table-striped table-bordered table-condensed">
       <thead>

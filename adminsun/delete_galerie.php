@@ -14,22 +14,22 @@ if (!empty($_GET) && isset($_GET['id'])) {
 	$id_zico = checkId($_GET['id']);
 	//si l'id est incorrect (NULL)
 	if(empty($id_zico)) {
-		$error[] = 'le recette recherché n\'existe pas';
+		$error[] = 'la photo recherché n\'existe pas';
 	}
 
 	if (count($error) == 0) {
 
 		if(isset($_GET['confirm']) && $_GET['confirm'] == 'ok') {
-	 		$del = $pdo->prepare('DELETE FROM zicos WHERE id = :id');
+	 		$del = $pdo->prepare('DELETE FROM galerie WHERE id = :id');
 	 		$del->bindValue(':id',$id_zico,PDO::PARAM_INT);
 	 		if($del->execute()) {
 	 				$_SESSION['del_zico'] = 'ok';
-	 				header('Location: view_zicos.php');
+	 				header('Location: view_galerie.php');
 	 				die;		
 			} 
 	 	}
 	 	else {
-				  $res = $pdo->prepare('SELECT * FROM zicos WHERE id = :id');
+				  $res = $pdo->prepare('SELECT * FROM galerie WHERE id = :id');
 				  $res->bindValue(':id', $id_zico, PDO::PARAM_INT);
 				  $res->execute();
 
@@ -50,11 +50,11 @@ if (count($error) > 0) : ?>
 include_once '../inc/header_admin.php';
 ?>
 <div class="alert alert-danger" role="alert">
-<p> ATTENTION ! Vous souhaitez surprimé la recette <?= $recette['nickname'] ?>!!! La sentence sera irrévocable !!!!</p>
+<p> ATTENTION ! Vous souhaitez surprimé la photo <?= $recette['desc_picture'] ?>!!! La sentence sera irrévocable !!!!</p>
 
 
 
 </div>
-<a type="button" class="btn btn-danger" href="delete_zicos.php?id=<?php echo $id_zico;?>&confirm=ok">Cliquez ici si vous souhaitez vraiment supprimer l'recette</a>
+<a type="button" class="btn btn-danger" href="delete_galerie.php?id=<?php echo $id_zico;?>&confirm=ok">Cliquez ici si vous souhaitez vraiment supprimer la photo</a>
 
 <?php include_once '../inc/footer_admin.php'; ?>
