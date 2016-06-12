@@ -10,34 +10,29 @@ $error = array();
 $errorUpdate  = false; // erreur lors de la mise à jour de la table
 $displayErr   = false; 
 $formValid    = false;
-$ZicoExist    = false;
-
+$photoExist    = false;
 
 $folder = '../images/'; // création de la variable indiquant le chemin du répertoire destination pour les fichiers uploadés (important  : le slash à la fin de la chaine de caractère).
-$maxSize = 10000 * 5; // 5Mo
+$maxSize = 1000000 * 5; // 5Mo
 
 
-// vérification des paramètres GET et appel des champs Zico correspondants
+// vérification des paramètres GET et appel des champs user correspondants
 if(isset($_GET['id']) AND !empty($_GET['id']) AND is_numeric($_GET['id'])) {
 
     $idPhoto = intval($_GET['id']);
 
-    // Prépare et execute la requète SQL pour récuperer notre Zico de manière dynamique
+    // Prépare et execute la requète SQL pour récuperer notre user de manière dynamique
     $req = $pdo->prepare('SELECT * FROM galerie WHERE id = :idPhoto');
     $req->bindParam(':idPhoto', $idPhoto, PDO::PARAM_INT);
     if($req->execute()) {
-        // $editPhoto contient mon musicien extrait de la pdo
+        // $editPhoto contient mon utilisateur extrait de la bdd
         $editPhoto = $req->fetch(PDO::FETCH_ASSOC);
-        if(!empty($editPhoto) && is_array($editPhoto)){ // Ici l'musicien existe donc on fait le traitement nécessaire
-            $ZicoExist = true; // Mon Zico existe.. donc bon paramètre GET et requête SQL ok
+        if(!empty($editPhoto) && is_array($editPhoto)){ // Ici l'utilisateur existe donc on fait le traitement nécessaire
+            $photoExist = true; // Mon user existe.. donc bon paramètre GET et requête SQL ok
 
-            //nom du fichier existant
-            $dirlink = $editPhoto['picture'];
-            // Si l'utilsateur existe, j'instancie la variable $idlink qui me permet de stcocker l'id Zico dans le nom du fichier
-            $idlink = $editPhoto['id'];
-
-            $desc_pic = $editPhoto['desc_picture'];
-
+            // Si l'utilsateur existe, j'instancie la variable $idAvatar qui me permet de stcocker l'id user dans le nom du fichier
+            $idAvatar = $editPhoto['id'];
+    /*        $editPhoto = $editPhoto['desc_picture'];*/
         }
     }
 }
@@ -52,6 +47,16 @@ if(!empty($_FILES) && isset($_FILES['picture'])) {
         $nomFichier = $_FILES['picture']['name']; // récupère le nom de mon fichier au sein de la superglobale $_FILES (tableau multi-dimentionnel)
         $tmpFichier = $_FILES['picture']['tmp_name']; // Stockage temporaire du fichier au sein de la superglobale $_FILES (tableau multi-dimentionnel)
         
+        
+        /* CONTROLE DU TYPE MIME
+        *  $file = new finfo(); // Classe FileInfo
+           $mimeType = $file->file($_FILES['image']['tmp_name'], FILEINFO_MIME_TYPE); // Retourne le VRAI mimeType
+
+        *
+        *
+        *
+        */
+
         $file = new finfo(); // Classe FileInfo
         $mimeType = $file->file($_FILES['picture']['tmp_name'], FILEINFO_MIME_TYPE); // Retourne le VRAI mimeType
 
@@ -59,25 +64,32 @@ if(!empty($_FILES) && isset($_FILES['picture'])) {
 
         if (in_array($mimeType, $mimTypeOK)) { // in_array() permet de tester si la valeur de $mimeType est contenue dans le tableau $mimTypeOK
                     
-   
+           /* CHANGER LE NOM DU FICHIER PAR MESURE DE SECURITE
+            * explode() permet de séparer une chaine de caractère en un tableau
+            * Ici on aura donc : 
+            *                   $newFileName  = array(
+                                                    0 => 'nom-de-mon-fichier',
+                                                    1 => '.jpg'
+                                                );
+            */
             $newFileName = explode('.', $nomFichier);
             $fileExtension = end($newFileName); // Récupère la dernière entrée du tableau (créé avec explode) soit l'extension du fichier
 
-            // nom du fichier link au format : Zico-id-timestamp.jpg
-            $finalFileName = 'galerie-'.$idlink.'-'.time().'.'.$fileExtension; // Le nom du fichier sera donc Zico-id-timestamp.jpg (time() retourne un timsestamp à la seconde)
+            // nom du fichier avatar au format : user-id-timestamp.jpg
+            $finalFileName = 'galerie-'.time().'.'.$fileExtension; // Le nom du fichier sera donc user-id-timestamp.jpg (time() retourne un timsestamp à la seconde)
 
 
 
                 if(move_uploaded_file($tmpFichier, $folder.$finalFileName)) { // move_uploaded_file()  retourne un booleen (true si le fichier a été envoyé et false si il y a une erreur)
                     // Ici je suis sur que mon image est au bon endroit
-                    $dirlink = $finalFileName;
+                    $dirAvatar = $folder.$finalFileName;
                     
                     $success = 'Votre fichier a été uplaodé avec succés !';
-                   
+                    $showSuccess = true;
                 }
                 else {
-                    // Permet d'assigner un link par defaut
-                    $dirlink = "link-default.jpg";
+                    // Permet d'assigner un avatar par defaut
+                    $dirAvatar = "images/default.jpg";
                 }
         } // if (in_array($mimeType, $mimTypeOK))
 
@@ -87,42 +99,43 @@ if(!empty($_FILES) && isset($_FILES['picture'])) {
 
 
     } // end if ($_FILES['picture']['error'] == UPLOAD_ERR_OK AND $_FILES['picture']['size'] <= $maxSize)
-
+    else {
+        $error[] = 'Merci de chosir un fichier image (uniquement au format jpg, jpeg, pnj ou gif) à uploader et ne dépassant pas 5Mo !';
+    }
 } // end if (!empty($_FILES) AND isset($_FILES['picture'])
 
 else {
-    // Permet d'assigner l'link par defaut si l'musicien n'en a aucun
-    $dirlink = "link-default.jpg";
+    // Permet d'assigner l'avatar par defaut si l'utilisateur n'en a aucun
+    $dirAvatar = "../images/avatar-default.jpg";
 }
 
 
-// Si le formulaire est soumis et que $ZicoExist est vrai (donc qu'on a un musicien)
-if(!empty($_POST) && $ZicoExist == true) {
+// Si le formulaire est soumis et que $userExist est vrai (donc qu'on a un utilisateur)
+if(!empty($_POST) && $photoExist == true) {
     foreach($_POST as $key => $value) {
         $post[$key] = trim(strip_tags($value));
     }
-    if(!preg_match("#^[a-zA-Z0-9À-ú\.:\!\?\&',\s-]{10,140}#", $post['desc_picture'])){
-        $errors[] = 'La photo doit comporter au minimum 10 et 140 caractères'; 
-	}
+
+    if(empty($post['desc_picture']) OR strlen($post['desc_picture']) < 2) {
+        $error[] = 'Votre description doit comporter au moins 2 caractères';
+    }
 
     if(count($error) > 0) {
         $displayErr = true;
-
-        $desc_pic = $post['desc_picture'];
     }
     else {
 
         //var_dump($post);
 
         // insertion de la news dans la table "news"
-        $upd = $pdo->prepare('UPDATE galerie SET  desc_picture = :desc_picture, picture = :picture WHERE id = :idPhoto');
+        $upd = $pdo->prepare('UPDATE galerie SET desc_picture = :desc_picture, picture = :avatarUser WHERE id = :idPhoto');
 
         // On assigne les valeurs associées au champs de la table (au dessus) aux valeurs du formulaire
         // On passe l'id de l'article pour ne mettre à jour que l'article en cours d'édition (clause WHERE).
-
-        $upd->bindValue(':idPhoto',         $idPhoto,              PDO::PARAM_STR);
-        $upd->bindValue(':desc_picture',    $post['desc_picture'], PDO::PARAM_STR);
-        $upd->bindValue(':picture',         $dirlink,              PDO::PARAM_STR);
+        $upd->bindValue(':idPhoto',     $idPhoto,            PDO::PARAM_INT);
+        $upd->bindValue(':desc_picture', $post['desc_picture'],  PDO::PARAM_STR);
+        
+        $upd->bindValue(':avatarUser', $dirAvatar,         PDO::PARAM_STR);
     
         // Vue que la fonction "execute" retourne un booleen on peut si nécéssaire le mettre dans un if
         if($upd->execute()) { // execute : retourne un booleen -> true si pas de problème, false si souci.
@@ -132,7 +145,7 @@ if(!empty($_POST) && $ZicoExist == true) {
             $req = $pdo->prepare('SELECT * FROM galerie WHERE id = :idPhoto');
             $req->bindParam(':idPhoto', $idPhoto, PDO::PARAM_INT);
             if($req->execute()) {
-            // $editPhoto contient ma musicien extrait de la pdo
+            // $editPhoto contient mon utilisateur extrait de la bdd
                 $editPhoto = $req->fetch(PDO::FETCH_ASSOC);
             }
         }
@@ -142,6 +155,7 @@ if(!empty($_POST) && $ZicoExist == true) {
 
     }
 }
+
 include_once '../inc/header_admin.php';
 ?>
 
@@ -152,7 +166,7 @@ include_once '../inc/header_admin.php';
         
 
 
-                <?php if($ZicoExist == false): ?>
+                <?php if($photoExist == false): ?>
                 <div clas="col-md-12">   
                 <!-- message d'erreur si problème url -->
                     <div class="alert alert-danger" role="alert">
@@ -195,7 +209,7 @@ include_once '../inc/header_admin.php';
                 <?php endif; ?>
 
 
-                <?php if($ZicoExist == true): ?>
+                <?php if($photoExist == true): ?>
                 <div class="row">
                     <div class="col-md-12">
                     <h1>Edition de la photo : <strong><?php echo $editPhoto['desc_picture']; ?></strong></h1>
@@ -207,7 +221,7 @@ include_once '../inc/header_admin.php';
                                     
                                     <div class="form-group input-group">
                                         <span class="input-group-addon" id="basic-addon1">Déscription</span>
-                                        <textarea id="desc_zicos" name="desc_picture" rows="10" class="form-control input-md" ><?=$desc_pic; ?></textarea>
+                                        <textarea id="desc_zicos" name="desc_picture" rows="10" class="form-control input-md" ><?=$editPhoto['desc_picture']; ?></textarea>
                                     </div><br>
      
                                     <div class="form-group">

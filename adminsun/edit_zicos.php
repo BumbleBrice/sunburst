@@ -14,7 +14,7 @@ $ZicoExist    = false;
 
 
 $folder = '../images/'; // création de la variable indiquant le chemin du répertoire destination pour les fichiers uploadés (important  : le slash à la fin de la chaine de caractère).
-$maxSize = 10000 * 5; // 5Mo
+$maxSize = 1000000 * 5; // 5Mo
 
 
 // vérification des paramètres GET et appel des champs Zico correspondants
@@ -84,7 +84,7 @@ if(!empty($_FILES) && isset($_FILES['picture'])) {
             $fileExtension = end($newFileName); // Récupère la dernière entrée du tableau (créé avec explode) soit l'extension du fichier
 
             // nom du fichier link au format : Zico-id-timestamp.jpg
-            $finalFileName = 'musicien-'.$idlink.'-'.time().'.'.$fileExtension; // Le nom du fichier sera donc Zico-id-timestamp.jpg (time() retourne un timsestamp à la seconde)
+            $finalFileName = 'musicien-'.time().'.'.$fileExtension; // Le nom du fichier sera donc Zico-id-timestamp.jpg (time() retourne un timsestamp à la seconde)
 
 
 
@@ -93,7 +93,7 @@ if(!empty($_FILES) && isset($_FILES['picture'])) {
                     $dirlink = $finalFileName;
                     
                     $success = 'Votre fichier a été uplaodé avec succés !';
-                   
+                    $showSuccess = true;
                 }
                 else {
                     // Permet d'assigner un link par defaut
@@ -107,7 +107,9 @@ if(!empty($_FILES) && isset($_FILES['picture'])) {
 
 
     } // end if ($_FILES['picture']['error'] == UPLOAD_ERR_OK AND $_FILES['picture']['size'] <= $maxSize)
-
+    else {
+        $error[] = 'Merci de chosir un fichier image (uniquement au format jpg, jpeg, pnj ou gif) à uploader et ne dépassant pas 5Mo !';
+    }
 } // end if (!empty($_FILES) AND isset($_FILES['picture'])
 
 else {

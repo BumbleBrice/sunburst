@@ -63,7 +63,7 @@ if(!empty($_FILES) && isset($_FILES['picture'])) {
 } // end if (!empty($_FILES) AND isset($_FILES['picture'])
 
 else {
-    // Permet d'assigner l link par défaut si la musicien n'en a aucun
+    // Permet d'assigner l link par défaut si la photo n'en a aucun
     $dirlink = "link-default.jpg";
 }
 
@@ -75,7 +75,7 @@ if (!empty($_POST)) {
 	
     //if(strlen($post['content']) < 2 ){ // on défini les propriétés de 'content'
     if(!preg_match("#^[a-zA-Z0-9À-ú\.:\!\?\&',\s-]{3,140}#", $post['desc_picture'])){
-        $errors[] = 'La musicien doit comporter au minimum 10 et 140 caractères'; 
+        $errors[] = 'La photo doit comporter au minimum 10 et 140 caractères'; 
 	}
 	
 
@@ -110,7 +110,7 @@ include_once '../inc/header_admin.php';
 
 <?php 
 if($success){ // On affiche la réussite si tout fonctionne
-    echo '<div class="alert alert-success" role="alert"> La musicien a bien été créée ! </div>';
+    echo '<div class="alert alert-success" role="alert"> La photo a bien été créée ! </div>';
 }
 ?>
 
@@ -145,7 +145,7 @@ if($success){ // On affiche la réussite si tout fonctionne
                 </div>
 
                 <div class="col-md-2">
-                    <input type="submit" class="btn btn-success" value="Ajouter le musicien">
+                    <input type="submit" class="btn btn-success" value="Ajouter la photo">
                 </div>
             </div>
         </div><!--.form-group-->
