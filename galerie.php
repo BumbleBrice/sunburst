@@ -6,10 +6,7 @@ require_once 'inc/connect.php';
 	      <div class="galerie">
 
 	      
-			<div class="view fifth-effect">  
-			  <a href="#" title="Full Image"><img src="images/gaby.jpg" /></a>  
-			  <div class="mask"></div>  
-			</div> 
+			
 		      <!-- <ul>
 			     <li>
 			        <img src="images/gaby.jpg" alt="" />	          
