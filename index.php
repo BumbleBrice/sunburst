@@ -20,7 +20,7 @@
                 <ul class="bmenu">
                     <li><a href="sunburst.php">Sunburst</a></li>
                     <li><a href="galerie.php">Galerie photo</a></li>
-                    <li><a href="video.php">Video</a></li>
+                    <li><a href="video.php">Video et Musique</a></li>
                     <li><a href="concert.php">Date de concert</a></li>
                     <li><a href="contact.php">Contact</a></li>
                 </ul>

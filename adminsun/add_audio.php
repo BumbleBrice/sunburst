@@ -13,8 +13,8 @@ $desc_mp3 = '';
 $dirlink = "link-default.mp3";
 
 $folder = '../audio/'; // création de la variable indiquant le chemin du répertoire destination pour les fichiers uploadés (important  : le slash à la fin de la chaine de caractère).
-$maxSize = 10000000 * 5; // 5Mo
-
+$maxSize = 100000000000 * 5; // 5Mo
+echo var_dump($_FILES);
 if(!empty($_FILES) && isset($_FILES['link'])) {
 
     if ($_FILES['link']['error'] == UPLOAD_ERR_OK AND $_FILES['link']['size'] <= $maxSize) {
