@@ -1,6 +1,13 @@
 <?php
+if (!empty($_SESSION) && isset($_SESSION['user']['role'])){
 
-
+    if ($_SESSION['user']['role'] != 'admin') {
+        header('Location: index.php');
+    }
+    
+} else {
+    header('Location: ../index.php');
+}
 // connection à la base
 require_once '../inc/connect.php';
 
