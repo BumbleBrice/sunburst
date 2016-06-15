@@ -18,9 +18,6 @@ $errors = array(); // contiendra nos éventuelles erreurs
 $showErrors = false;
 $success = false; 
 
-$nickname = '';
-$name = '';
-$instru = '';
 $desc_picture = '';
 $dirlink = "link-default.jpg";
 
