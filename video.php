@@ -18,10 +18,11 @@ require_once 'inc/connect.php';
       foreach($musique as $mp3){ ?>
                 <div><h2><?php echo $mp3['desc_mp3']; ?></h2><audio src="audio/<?php echo $mp3['link']; ?>" controls></audio></div>
      <?php   } ?>
-                <div><h2>David Bowie - Oh ! You Pretty Things</h2><audio src="audio/bowie.mp3" controls></audio></div>
-                <div><h2>Motôrhead - Ace of Spades</h2><audio src="audio/motor.mp3" controls></audio></div>
-                <div><h2>U2 - In a Little While</h2><audio src="audio/u2.mp3" controls></audio></div>
+               
         </div>
+        <!--  <div><h2>David Bowie - Oh ! You Pretty Things</h2><audio src="audio/bowie.mp3" controls></audio></div>
+                <div><h2>Motôrhead - Ace of Spades</h2><audio src="audio/motor.mp3" controls></audio></div>
+                <div><h2>U2 - In a Little While</h2><audio src="audio/u2.mp3" controls></audio></div> -->
 </div>
 <?php 
 require_once 'inc/footer.php';

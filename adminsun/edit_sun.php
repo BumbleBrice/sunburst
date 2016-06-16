@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (!empty($_SESSION) && isset($_SESSION['user']['role'])){
 
     if ($_SESSION['user']['role'] != 'admin') {
@@ -9,7 +10,7 @@ if (!empty($_SESSION) && isset($_SESSION['user']['role'])){
     header('Location: ../index.php');
 }
 
-session_start();
+
 
 // connection à la base
 require_once '../inc/connect.php';

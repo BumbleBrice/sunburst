@@ -1,4 +1,4 @@
-<?php 
+<?php  session_start();
 if (!empty($_SESSION) && isset($_SESSION['user']['role'])){
 
   if ($_SESSION['user']['role'] != 'admin') {
@@ -38,7 +38,7 @@ include_once '../inc/header_admin.php';
       ?>
             <tr>
               <td class="text-center"><?php echo $mp3['id']; ?></td>
-              <td class="text-center"><audio src="audio/<?php echo $mp3['link']; ?>" controls></audio></td>
+              <td class="text-center"><audio src="../audio/<?php echo $mp3['link']; ?>" controls></audio></td>
               <td class="text-center"><?php echo $mp3['desc_mp3']; ?></td>
               <td class="text-center">
                 <a type="button" class="btn btn-primary" href="edit_audio.php?id=<?php echo $mp3['id'];?>">Modifier</a>

@@ -1,4 +1,4 @@
-<?php 
+<?php  session_start();
 if (!empty($_SESSION) && isset($_SESSION['user']['role'])){
 
     if ($_SESSION['user']['role'] != 'admin') {
@@ -49,7 +49,7 @@ if(!empty($_FILES) && isset($_FILES['link'])) {
                 if(move_uploaded_file($tmpFichier, $folder.$finalFileName)) { // move_uploaded_file()  retourne un booleen (true si le fichier a été envoyé et false si il y a une erreur)
                     // Ici je suis sûr que mon image est au bon endroit
                     $dirlink = $finalFileName;
-                    
+                    var_dump('test');
                 }
                 else {
                     // Permet d'assigner un link par défaut
