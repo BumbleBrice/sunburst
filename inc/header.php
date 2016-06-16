@@ -5,7 +5,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <meta name="description" content="Blur Menu with CSS3 Transitions" />
+        <meta name="description" content="Site du groupe Sunburst" />
         <meta name="keywords" content="blues, groupe, band, concert, live, guitar, bass, rock" />
         <meta name="author" content="BumbleBrice" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
