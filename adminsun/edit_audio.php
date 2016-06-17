@@ -16,29 +16,29 @@ $error = array();
 $errorUpdate  = false; // erreur lors de la mise à jour de la table
 $displayErr   = false; 
 $formValid    = false;
-$photoExist    = false;
+$mp3Exist    = false;
 
-$folder = '../images/'; // création de la variable indiquant le chemin du répertoire destination pour les fichiers uploadés (important  : le slash à la fin de la chaine de caractère).
+$folder = '../audio/'; // création de la variable indiquant le chemin du répertoire destination pour les fichiers uploadés (important  : le slash à la fin de la chaine de caractère).
 $maxSize = 1000000 * 5; // 5Mo
 
 
 // vérification des paramètres GET et appel des champs user correspondants
 if(isset($_GET['id']) AND !empty($_GET['id']) AND is_numeric($_GET['id'])) {
 
-    $idPhoto = intval($_GET['id']);
+    $idMp3 = intval($_GET['id']);
 
     // Prépare et execute la requète SQL pour récuperer notre user de manière dynamique
-    $req = $pdo->prepare('SELECT * FROM galerie WHERE id = :idPhoto');
-    $req->bindParam(':idPhoto', $idPhoto, PDO::PARAM_INT);
+    $req = $pdo->prepare('SELECT * FROM mp3 WHERE id = :idMp3');
+    $req->bindParam(':idMp3', $idMp3, PDO::PARAM_INT);
     if($req->execute()) {
-        // $editPhoto contient mon utilisateur extrait de la bdd
-        $editPhoto = $req->fetch(PDO::FETCH_ASSOC);
-        if(!empty($editPhoto) && is_array($editPhoto)){ // Ici l'utilisateur existe donc on fait le traitement nécessaire
-            $photoExist = true; // Mon user existe.. donc bon paramètre GET et requête SQL ok
+        // $editMp3 contient mon utilisateur extrait de la bdd
+        $editMp3 = $req->fetch(PDO::FETCH_ASSOC);
+        if(!empty($editMp3) && is_array($editMp3)){ // Ici l'utilisateur existe donc on fait le traitement nécessaire
+            $mp3Exist = true; // Mon user existe.. donc bon paramètre GET et requête SQL ok
 
             // Si l'utilsateur existe, j'instancie la variable $idAvatar qui me permet de stcocker l'id user dans le nom du fichier
-            $idAvatar = $editPhoto['id'];
-    /*        $editPhoto = $editPhoto['desc_picture'];*/
+            $idAvatar = $editMp3['id'];
+    /*        $editMp3 = $editMp3['desc_picture'];*/
         }
     }
 }
@@ -54,48 +54,31 @@ if(!empty($_FILES) && isset($_FILES['link'])) {
         $tmpFichier = $_FILES['link']['tmp_name']; // Stockage temporaire du fichier au sein de la superglobale $_FILES (tableau multi-dimentionnel)
         
         
-        /* CONTROLE DU TYPE MIME
-        *  $file = new finfo(); // Classe FileInfo
-           $mimeType = $file->file($_FILES['image']['tmp_name'], FILEINFO_MIME_TYPE); // Retourne le VRAI mimeType
-
-        *
-        *
-        *
-        */
-
         $file = new finfo(); // Classe FileInfo
-        $mimeType = $file->file($_FILES['picture']['tmp_name'], FILEINFO_MIME_TYPE); // Retourne le VRAI mimeType
+        $mimeType = $file->file($_FILES['link']['tmp_name'], FILEINFO_MIME_TYPE); // Retourne le VRAI mimeType
 
-        $mimTypeOK = array('image/jpeg', 'image/jpg', 'image/png', 'image/gif');
+        $mimTypeOK = array('audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/x-wav');
 
         if (in_array($mimeType, $mimTypeOK)) { // in_array() permet de tester si la valeur de $mimeType est contenue dans le tableau $mimTypeOK
                     
-           /* CHANGER LE NOM DU FICHIER PAR MESURE DE SECURITE
-            * explode() permet de séparer une chaine de caractère en un tableau
-            * Ici on aura donc : 
-            *                   $newFileName  = array(
-                                                    0 => 'nom-de-mon-fichier',
-                                                    1 => '.jpg'
-                                                );
-            */
             $newFileName = explode('.', $nomFichier);
             $fileExtension = end($newFileName); // Récupère la dernière entrée du tableau (créé avec explode) soit l'extension du fichier
 
             // nom du fichier avatar au format : user-id-timestamp.jpg
-            $finalFileName = 'galerie-'.time().'.'.$fileExtension; // Le nom du fichier sera donc user-id-timestamp.jpg (time() retourne un timsestamp à la seconde)
+            $finalFileName = 'mp3-'.time().'.'.$fileExtension; // Le nom du fichier sera donc user-id-timestamp.jpg (time() retourne un timsestamp à la seconde)
 
 
 
                 if(move_uploaded_file($tmpFichier, $folder.$finalFileName)) { // move_uploaded_file()  retourne un booleen (true si le fichier a été envoyé et false si il y a une erreur)
                     // Ici je suis sur que mon image est au bon endroit
-                    $dirAvatar = $folder.$finalFileName;
+                    $dirlink = $folder.$finalFileName;
                     
                     $success = 'Votre fichier a été uplaodé avec succés !';
                     $showSuccess = true;
                 }
                 else {
                     // Permet d'assigner un avatar par defaut
-                    $dirAvatar = "images/default.jpg";
+                    $dirlink = "audio/default.mp3";
                 }
         } // if (in_array($mimeType, $mimTypeOK))
 
@@ -106,24 +89,24 @@ if(!empty($_FILES) && isset($_FILES['link'])) {
 
     } // end if ($_FILES['picture']['error'] == UPLOAD_ERR_OK AND $_FILES['picture']['size'] <= $maxSize)
     else {
-        $error[] = 'Merci de chosir un fichier image (uniquement au format jpg, jpeg, pnj ou gif) à uploader et ne dépassant pas 5Mo !';
+        $error[] = 'Merci de chosir un fichier image (uniquement au format .mp3 ou .wav) à uploader et ne dépassant pas 5Mo !';
     }
 } // end if (!empty($_FILES) AND isset($_FILES['picture'])
 
 else {
     // Permet d'assigner l'avatar par defaut si l'utilisateur n'en a aucun
-    $dirAvatar = "../images/avatar-default.jpg";
+    $dirlink = "../audio/mp3-default.jpg";
 }
 
 
 // Si le formulaire est soumis et que $userExist est vrai (donc qu'on a un utilisateur)
-if(!empty($_POST) && $photoExist == true) {
+if(!empty($_POST) && $mp3Exist == true) {
     foreach($_POST as $key => $value) {
         $post[$key] = trim(strip_tags($value));
     }
 
-    if(empty($post['desc_picture']) OR strlen($post['desc_picture']) < 2) {
-        $error[] = 'Votre description doit comporter au moins 2 caractères';
+    if(!preg_match("#^[a-zA-Z0-9À-ú\.:\!\?\&',\s-]{3,140}#", $post['desc_mp3'])){
+        $errors[] = 'Le morceau doit comporter au minimum 3 et 140 caractères'; 
     }
 
     if(count($error) > 0) {
@@ -133,25 +116,26 @@ if(!empty($_POST) && $photoExist == true) {
 
         //var_dump($post);
 
-        // insertion de la news dans la table "news"
-        $upd = $pdo->prepare('UPDATE galerie SET desc_picture = :desc_picture, picture = :avatarUser WHERE id = :idPhoto');
+        // insertion de la news dans la table "mp3"
+        $upd = $pdo->prepare('UPDATE mp3 SET desc_mp3 = :desc_mp3, link = :linkmp3 WHERE id = :idMp3');
 
         // On assigne les valeurs associées au champs de la table (au dessus) aux valeurs du formulaire
         // On passe l'id de l'article pour ne mettre à jour que l'article en cours d'édition (clause WHERE).
-        $upd->bindValue(':idPhoto',     $idPhoto,            PDO::PARAM_INT);
-        $upd->bindValue(':desc_picture', $post['desc_picture'],  PDO::PARAM_STR);
-        $upd->bindValue(':avatarUser', $dirAvatar,         PDO::PARAM_STR);
+        $upd->bindValue(':idMp3',       $idMp3,               PDO::PARAM_INT);
+        $upd->bindValue(':desc_mp3',    $post['desc_mp3'],    PDO::PARAM_STR);
+        $upd->bindValue(':linkmp3',     $dirlink,             PDO::PARAM_STR);
+
     
         // Vue que la fonction "execute" retourne un booleen on peut si nécéssaire le mettre dans un if
         if($upd->execute()) { // execute : retourne un booleen -> true si pas de problème, false si souci.
             $formValid    = true;
             // On refait le SELECT pour afficher les infos à jour dans le formulaire
             // Puisque le premier SELECT est avant l'UPDATE
-            $req = $pdo->prepare('SELECT * FROM galerie WHERE id = :idPhoto');
-            $req->bindParam(':idPhoto', $idPhoto, PDO::PARAM_INT);
+            $req = $pdo->prepare('SELECT * FROM mp3 WHERE id = :idMp3');
+            $req->bindParam(':idMp3', $idMp3, PDO::PARAM_INT);
             if($req->execute()) {
-            // $editPhoto contient mon utilisateur extrait de la bdd
-                $editPhoto = $req->fetch(PDO::FETCH_ASSOC);
+            // $editMp3 contient mon utilisateur extrait de la bdd
+                $editMp3 = $req->fetch(PDO::FETCH_ASSOC);
             }
         }
         else {
@@ -171,13 +155,13 @@ include_once '../inc/header_admin.php';
         
 
 
-                <?php if($photoExist == false): ?>
+                <?php if($mp3Exist == false): ?>
                 <div clas="col-md-12">   
                 <!-- message d'erreur si problème url -->
                     <div class="alert alert-danger" role="alert">
-                        <i class="fa fa-times fa-2x" aria-hidden="true"></i> Vous devez choisir une photo avant de la modifier
+                        <i class="fa fa-times fa-2x" aria-hidden="true"></i> Vous devez choisir un morceau avant de le modifier
                     </div>
-                    <a class="btn btn-default btn-md" href="view_galerie.php" role="button">Liste des photo de la galerie</a>
+                    <a class="btn btn-default btn-md" href="view_audio.php" role="button">Liste des morceaux</a>
                 </div>
                 <?php endif; ?>
                 
@@ -185,7 +169,7 @@ include_once '../inc/header_admin.php';
                 <div clas="col-md-12">   
                 <!-- message d'erreur si problème url -->
                     <div class="alert alert-danger" role="alert">
-                        <i class="fa fa-times fa-2x" aria-hidden="true"></i> Problème lors de la mise à jour de la photo ! <br /> <?php //echo print_r($res->errorInfo()); ?>
+                        <i class="fa fa-times fa-2x" aria-hidden="true"></i> Problème lors de la mise à jour du morceau ! <br /> <?php //echo print_r($res->errorInfo()); ?>
                     </div>
                     <a class="btn btn-default btn-md" href="index.php" role="button">Page d'accueil</a>
                 </div>
@@ -205,19 +189,19 @@ include_once '../inc/header_admin.php';
                 <?php if($formValid): ?>
                 <!-- message de confirmation après une modification de news -->
                 <div clas="col-md-12">
-                    <h1>Modification de la photo <strong><?php echo $editPhoto['desc_picture']; ?></strong> effectuée</h1>
+                    <h1>Modification du morceau <strong><?php echo $editMp3['desc_mp3']; ?></strong> effectuée</h1>
                     <div class="alert alert-success" role="alert">
-                        <i class="fa fa-check fa-2x" aria-hidden="true"></i> Votre photo a bien été modifié.
+                        <i class="fa fa-check fa-2x" aria-hidden="true"></i> Votre morceau a bien été modifié.
                     </div>
-                    <a class="btn btn-default btn-md" href="view_galerie.php" role="button">Liste des photos</a>
+                    <a class="btn btn-default btn-md" href="view_audio.php" role="button">Liste des morceaux</a>
                 </div>
                 <?php endif; ?>
 
 
-                <?php if($photoExist == true): ?>
+                <?php if($mp3Exist == true): ?>
                 <div class="row">
                     <div class="col-md-12">
-                    <h1>Edition de la photo : <strong><?php echo $editPhoto['desc_picture']; ?></strong></h1>
+                    <h1>Edition du morceau : <strong><?php echo $editMp3['desc_mp3']; ?></strong></h1>
 
                         <form class="form-horizontal" method="POST" enctype="multipart/form-data">
                             <fieldset>
@@ -226,11 +210,11 @@ include_once '../inc/header_admin.php';
                                     
                                     <div class="form-group input-group">
                                         <span class="input-group-addon" id="basic-addon1">Déscription</span>
-                                        <textarea id="desc_zicos" name="desc_picture" rows="10" class="form-control input-md" ><?=$editPhoto['desc_picture']; ?></textarea>
+                                        <textarea id="desc_mp3" name="desc_mp3" rows="5" class="form-control input-md" ><?=$editMp3['desc_mp3']; ?></textarea>
                                     </div><br>
      
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label" for="picture"></label> 
+                                        <label class="col-md-2 control-label" for="mp3"></label> 
                                         <div class="col-md-10">
                                         <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $maxSize; ?>">
                                         <input type="file" class="filestyle" name="picture" data-buttonName="btn-primary">
@@ -240,8 +224,8 @@ include_once '../inc/header_admin.php';
                                     <div class="form-group">
                                         <label class="col-md-2 control-label" for="singlebutton"></label>
                                         <div class="col-md-10">
-                                            <input type="hidden" name="id" value="<?php echo $editPhoto['id']; ?>">
-                                            <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Modifier</button> <a href="view_galerie.php" class="btn btn-default">Ne rien changer et retourner à la liste des photos</a>
+                                            <input type="hidden" name="id" value="<?php echo $editMp3['id']; ?>">
+                                            <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Modifier</button> <a href="view_audio.php" class="btn btn-default">Ne rien changer et retourner à la liste des morceaux</a>
                                         </div>
                                     </div>
                             </fieldset>

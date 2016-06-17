@@ -1,4 +1,5 @@
-<?php  session_start();
+<?php  
+session_start();
 if (!empty($_SESSION) && isset($_SESSION['user']['role'])){
 
     if ($_SESSION['user']['role'] != 'admin') {
@@ -22,8 +23,8 @@ $desc_mp3 = '';
 $dirlink = "link-default.mp3";
 
 $folder = '../audio/'; // création de la variable indiquant le chemin du répertoire destination pour les fichiers uploadés (important  : le slash à la fin de la chaine de caractère).
-$maxSize = 100000000000 * 5; // 5Mo
-echo var_dump($_FILES);
+$maxSize = 1000000 * 5; // 5Mo
+
 if(!empty($_FILES) && isset($_FILES['link'])) {
 
     if ($_FILES['link']['error'] == UPLOAD_ERR_OK AND $_FILES['link']['size'] <= $maxSize) {
@@ -49,8 +50,7 @@ if(!empty($_FILES) && isset($_FILES['link'])) {
                 if(move_uploaded_file($tmpFichier, $folder.$finalFileName)) { // move_uploaded_file()  retourne un booleen (true si le fichier a été envoyé et false si il y a une erreur)
                     // Ici je suis sûr que mon image est au bon endroit
                     $dirlink = $finalFileName;
-                    var_dump('test');
-                }
+                   }
                 else {
                     // Permet d'assigner un link par défaut
                     $dirlink = "link-default.mp3";
@@ -138,8 +138,8 @@ if($success){ // On affiche la réussite si tout fonctionne
      
 
         <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Descriptif de la photo</span>
-            <textarea id="content" name="desc_mp3" rows="5" class="form-control input-md" placeholder="Descriptif de la photo"><?=$desc_mp3;?></textarea>
+            <span class="input-group-addon" id="basic-addon1">Descriptif du morceau</span>
+            <textarea id="content" name="desc_mp3" rows="5" class="form-control input-md" placeholder="Descriptif du morceau"><?=$desc_mp3;?></textarea>
         </div>
         <br>
 

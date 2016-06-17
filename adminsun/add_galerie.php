@@ -50,7 +50,6 @@ if(!empty($_FILES) && isset($_FILES['picture'])) {
                 if(move_uploaded_file($tmpFichier, $folder.$finalFileName)) { // move_uploaded_file()  retourne un booleen (true si le fichier a été envoyé et false si il y a une erreur)
                     // Ici je suis sûr que mon image est au bon endroit
                     $dirlink = $finalFileName;
-                    
                 }
                 else {
                     // Permet d'assigner un link par défaut
@@ -88,11 +87,11 @@ if (!empty($_POST)) {
 
     else { 
     	// Insertion dans la pdo 
-    	$res = $pdo->prepare('INSERT INTO `galerie` (`desc_picture`, `picture`) VALUES (:desc_picture, :linkzicos)');
+    	$res = $pdo->prepare('INSERT INTO `galerie` (`desc_picture`, `link`) VALUES (:desc_picture, :link_picture)');
 
        
         $res->bindValue(':desc_picture', 	$post['desc_picture'],	   PDO::PARAM_STR);
-        $res->bindValue(':linkzicos',  		$dirlink,                  PDO::PARAM_STR);
+        $res->bindValue(':link_picture',  	$dirlink,                  PDO::PARAM_STR);
         
     
 	    if($res->execute()){

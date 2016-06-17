@@ -37,7 +37,7 @@ include_once '../inc/header_admin.php';
       ?>
             <tr>
               <td class="text-center"><?php echo $pic['id']; ?></td>
-              <td class="text-center"><?php echo '<img src="../images/'.$pic['picture'].'" alt="Photo du pics" width="50">'?></td>
+              <td class="text-center"><?php echo '<img src="../images/'.$pic['link'].'" alt="Photo du pics" width="50">'?></td>
               <td class="text-center"><?php echo $pic['desc_picture']; ?></td>
               <td class="text-center">
                 <a type="button" class="btn btn-primary" href="edit_galerie.php?id=<?php echo $pic['id'];?>">Modifier</a>

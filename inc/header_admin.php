@@ -21,14 +21,14 @@
                         <li><a href="index.php">Administration</a>
                         </li>
                         <li class="dropdown">
-    						<a href="view<_zicos" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Musiciens<span class="caret"></span></a>
+    						<a href="view<_zicos.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Musiciens<span class="caret"></span></a>
     						<ul class="dropdown-menu">
                                 <li><a href="view_zicos.php">Liste des musiciens</a></li>
                                  <li><a href="add_zicos.php">Ajouter un musicien</a></li>
     						</ul>
     					</li>
                         <li class="dropdown">
-                            <a href="view_galerie" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Galerie<span class="caret"></span></a>
+                            <a href="view_galerie.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Galerie<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="view_galerie.php">Liste des photo</a></li>
                                  <li><a href="add_galerie.php">Ajouter une photo</a></li>
@@ -42,7 +42,13 @@
                             </ul>
                         </li>
 
-                        <li><a href="view_audio.php">mp3</a></li>
+                        <li class="dropdown">
+                            <a href="view_audio.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">mp3<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="view_audio.php">Voir la liste des morceaux</a></li>
+                                <li><a href="add_audio.php">Ajouter une morceau</a></li>
+                            </ul>
+                        </li>
 						<li><a href="view_video.php">Video</a></li>
 						<li><a href="contact.php">Lire les messages</a></li>
                     </ul>
