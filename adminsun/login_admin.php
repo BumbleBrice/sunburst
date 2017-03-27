@@ -28,6 +28,7 @@ $post = [];
 $error = [];
 $mdpValide = false;
 $errorSession = false;
+$msgErr = '<div class="alert alert-success">Le nom ou le password est invalide</div>';
 
 
 
@@ -38,10 +39,10 @@ if(!empty($_POST)){//01
 
 	// On vérifie que l'adresse email est au bon format
 	if(!preg_match ( "#^[a-zA-Z0-9]{3,20}$#" , $post['nickname'] )){
-		$error[] = '<div class="text-center alert alert-danger">Le nom ou est invalide</div>';
+		$error[] = $msgErr;
 	}
 	if(!preg_match ( "#^[a-zA-Z0-9]{8,20}$#" , $post['password'] )){
-		$error[] = '<div class="alert alert-success">Le nom ou le password est invalide</div>';
+		$error[] = $msgErr;
 	}
 	if(count($error) == 0){//02
 		$select = $pdo->prepare('SELECT * FROM users  WHERE nickname = :checkName');//
